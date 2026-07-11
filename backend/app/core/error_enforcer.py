@@ -17,7 +17,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from backend.app.core.exceptions import OmniMindError
-from backend.app.core.logging import get_logger
+from backend.app.core.config import get_logger
 
 logger = get_logger("error_enforcer")
 

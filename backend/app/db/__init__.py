@@ -5,4 +5,5 @@ from backend.db.qdrant import ensure_collection as ensure_collection  # noqa: F4
 from backend.db.base import Base as Base  # noqa: F401
 from backend.db.session import dispose_db as dispose_db  # noqa: F401
 from backend.db.session import get_session as get_session  # noqa: F401
+from backend.db.session import get_session as get_db_session  # noqa: F401
 from backend.db.session import init_db as init_db  # noqa: F401

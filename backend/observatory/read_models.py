@@ -104,7 +104,7 @@ class ObservatoryProjection:
 
     async def handle_event(self, event: EventEnvelope) -> None:
         """Update read models based on event."""
-        event_name = event.payload.get("name", "")
+        event_name = event.name
 
         if event_name == "MissionCreated":
             await self._handle_mission_created(event)

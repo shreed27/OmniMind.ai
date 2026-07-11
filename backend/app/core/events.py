@@ -41,10 +41,38 @@ class EventEnvelope(BaseModel):
         }
 
 
-def emit(name: str, payload: dict[str, Any], context: dict[str, Any] | None = None) -> EventEnvelope:
+def emit(
+    name: str,
+    payload: dict[str, Any],
+    context: dict[str, Any] | None = None,
+    *,
+    event_id: UUID | None = None,
+    mission_id: str | None = None,
+    organization_id: str | None = None,
+    department_id: str | None = None,
+    worker_id: str | None = None,
+    trace_id: str | None = None,
+    **extra_context: Any,
+) -> EventEnvelope:
     from app.core.config import enrich_event_context
 
     merged = enrich_event_context(context or {})
-    event = EventEnvelope(name=name, payload=payload, context=merged)
+    if mission_id:
+        merged.setdefault("mission_id", mission_id)
+    if organization_id:
+        merged.setdefault("organization_id", organization_id)
+    if department_id:
+        merged.setdefault("department_id", department_id)
+    if worker_id:
+        merged.setdefault("worker_id", worker_id)
+    if trace_id:
+        merged.setdefault("trace_id", trace_id)
+    merged.update(extra_context)
+    event = EventEnvelope(
+        event_id=event_id or uuid4(),
+        name=name,
+        payload=payload,
+        context=merged,
+    )
     event.emit()
     return event
