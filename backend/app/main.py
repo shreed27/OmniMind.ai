@@ -9,6 +9,7 @@ from backend.app.api.v1.managed_agents import router as managed_agents_router
 from backend.app.api.v1.missions import router as missions_router
 from backend.app.api.v1.organizations import router as organizations_router
 from backend.app.api.v1.workers import router as workers_router
+from backend.app.core.error_enforcer import register_error_handlers
 from app.core.config import get_settings
 from app.core.events import emit
 
@@ -28,6 +29,9 @@ def create_app() -> FastAPI:
     application.include_router(organizations_router)
     application.include_router(departments_router)
     application.include_router(workers_router)
+
+    # Register error contract enforcer
+    register_error_handlers(application)
 
     @application.on_event("startup")
     async def _on_startup() -> None:
