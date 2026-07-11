@@ -10,7 +10,16 @@ class EventBus(Protocol):
     async def publish(self, event: EventEnvelope) -> str:
         ...
 
+    async def dispatch(self, event: EventEnvelope) -> str:
+        ...
+
     def subscribe(self, event_name: str, handler: Callable[[EventEnvelope], Awaitable[None]]) -> str:
+        ...
+
+    async def start(self) -> None:
+        ...
+
+    async def stop(self) -> None:
         ...
 
     async def disconnect(self) -> None:

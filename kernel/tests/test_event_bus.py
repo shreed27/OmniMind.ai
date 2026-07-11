@@ -23,6 +23,10 @@ async def test_event_bus_subscriber_receives_event() -> None:
         received.append(event)
 
     bus.subscribe("MissionCreated", handler)
-    event = EventEnvelope(name="MissionCreated", payload={"ok": True}, context={})
+    event = EventEnvelope(
+        name="MissionCreated",
+        payload={"ok": True, "service": "kernel"},
+        context={"mission_id": "m1"},
+    )
     await bus.publish(event)
     assert received == [event]

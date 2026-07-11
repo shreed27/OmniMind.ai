@@ -204,21 +204,149 @@ Acceptance: Keys loaded securely.
 
 # PHASE 2 — KERNEL
 
-- TASK-021 Mission Scheduler
-- TASK-022 Organization Manager
-- TASK-023 Department Manager
-- TASK-024 Worker Scheduler
-- TASK-025 Event Bus
-- TASK-026 Mission Graph Engine
-- TASK-027 Memory Manager
-- TASK-028 Knowledge Graph
-- TASK-029 Skill Registry
-- TASK-030 Reflection Engine
-- TASK-031 Evolution Engine
-- TASK-032 Analytics Engine
-- TASK-033 Security Engine
-- TASK-034 Synchronization Engine
-- TASK-035 Digital Twin Engine
+## TASK-021
+
+Title: Event Envelope & Registry Loader
+Status: In Progress
+Dependencies: TASK-002, docs/registry/EVENTS.md
+Goal: Define EventEnvelope in `kernel/core/event.py`, introduce signing-keyed `event_id`, SHA-256 `payload_hash` from sorted payload, and registry-backed validation.
+Delivered
+- `EventEnvelope` uses `payload_hash`.
+- `EventEnvelope.event_id` derives from `name`, `payload_hash`, sorted context hash, and a signing key.
+- `EventRegistry.validate()` enforces payload hash length and source service presence.
+Acceptance: Invalid event schema raises `InvalidEventError`. Registry loader returns canonical event definitions for v1. Payload hash matches SHA-256 of sorted JSON.
+
+## TASK-022
+
+Title: Kernel Event Bus Interface
+Status: In Progress
+Dependencies: TASK-021
+Goal: Define `EventBus` protocol in `kernel/core/ports.py`, implement `InMemoryEventBus` in `kernel/core/event_bus.py`, add publish/subscribe DLQ placeholder, start/stop lifecycle, and tests in `kernel/tests/test_event_bus.py`.
+Delivered
+- `EventBus` protocol captures `publish`, `subscribe`, `start`, `stop`, `replay`, `dead_letter`.
+- `InMemoryEventBus.publish` validates through `EventRegistry` and returns event reference string.
+- Updated tests validate registration/deregistration flow.
+Acceptance: `publish` returns `event_id`-ending reference. Subscribers receive published events in order. Dead-letter queue captures malformed handlers.
+
+## TASK-023
+
+Title: Kernel Configuration & Secrets Loader
+Status: Pending
+Dependencies: TASK-002
+Goal: Centralize config, env layering, and secret retrieval contract.
+Delivered
+
+Acceptance: `.dev`, `.prod`, and runtime overrides load correctly. Missing required secrets raise `MissingSecretError` on startup. No secret value ever returned in logs or serialized config dumps.
+
+## TASK-024
+
+Title: Event Append Store
+Status: Pending
+Dependencies: TASK-021, TASK-002
+Goal: Persist event envelope to Postgres before bus dispatch with idempotency on retry.
+Delivered
+
+Acceptance: Duplicate `event_id` insert raises constraint error. Causal version monotonicity enforced. Events queryable by `(mission_id, timestamp DESC)`.
+
+## TASK-025
+
+Title: Mission Graph Engine
+Status: Pending
+Dependencies: TASK-021, TASK-024
+Goal: Canonical append-only mission graph store with branch, merge, rollback.
+Delivered
+
+Acceptance: Immutable append with required field validation. Rollback returns to target node without deleting history.
+
+## TASK-026
+
+Title: Memory Manager
+Status: Pending
+Dependencies: TASK-021, TASK-023
+Goal: Hierarchical memory with working/mission/department/org awareness.
+Delivered
+
+Acceptance: Scoped memory access. Night cycle compression.
+
+## TASK-027
+
+Title: Knowledge Graph
+Status: Pending
+Dependencies: TASK-024, TASK-025
+Goal: Embedding-backed Knowledge Graph for lessons/artifacts.
+Delivered
+
+Acceptance: Semantic discovery works. Embeddings invalidated on update.
+
+## TASK-028
+
+Title: Skill Registry
+Status: Pending
+Dependencies: TASK-025, TASK-027
+Goal: Versioned skills lifecycle with benchmark and ratings.
+Delivered
+
+Acceptance: Fork retains provenance. Publish creates new version without losing old versions.
+
+## TASK-029
+
+Title: Reflection Engine
+Status: Pending
+Dependencies: TASK-023
+Goal: Mandatory post-task/mission reflection.
+Delivered
+
+Acceptance: Reflection cannot be skipped. Outputs lessons, knowledge, skills, recommendations.
+
+## TASK-030
+
+Title: Evolution Engine
+Status: Pending
+Dependencies: TASK-029
+Goal: Propose structural changes; require executive approval before applying.
+Delivered
+
+Acceptance: Proposals only. Revert emits rollback events.
+
+## TASK-031
+
+Title: Analytics Engine
+Status: Pending
+Dependencies: TASK-027
+Goal: Time-series metrics for Organization IQ, Plasticity, success rates.
+Delivered
+
+Acceptance: Metrics derived from events. Historical queries bounded.
+
+## TASK-032
+
+Title: Security Engine
+Status: Pending
+Dependencies: TASK-021, TASK-030
+Goal: RBAC, secrets, encryption, audit, approval.
+Delivered
+
+Acceptance: End-to-end security policies enforced.
+
+## TASK-033
+
+Title: Synchronization Engine
+Status: Pending
+Dependencies: TASK-021, TASK-025
+Goal: Cloud↔edge reconciliation with causal version tracking.
+Delivered
+
+Acceptance: Conflicts flagged with entity hashes. Merge/replace/branch policies emit resolution events.
+
+## TASK-034
+
+Title: Digital Twin Engine
+Status: Pending
+Dependencies: TASK-022, TASK-027
+Goal: Live organization state cache with scoped WebSocket updates.
+Delivered
+
+Acceptance: WebSocket channels can subscribe to subscopes.
 
 Acceptance: EnterpriseOS boots.
 
