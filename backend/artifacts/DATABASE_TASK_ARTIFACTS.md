@@ -1,5 +1,3 @@
-# Database Task Artifacts
-
 ## TASK-006 PostgreSQL
 - schema: missions table
 - created_at: yes
@@ -12,4 +10,5 @@
 - port: 6379
 
 ## TASK-009 Qdrant
-- collection: omnimind-missions
+- vector index: omnimind-missions
+- recreate: False
