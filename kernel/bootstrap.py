@@ -6,10 +6,9 @@ import sys
 from typing import Any
 
 from kernel.core.config import get_kernel_settings
-from kernel.core.event_bus import InMemoryEventBus
+from kernel.core.event_bus import EventBus
 from kernel.core.exceptions import KernelBootError
 from kernel.core.logging import get_logger
-from kernel.core.ports import EventBus
 from kernel.services.department_manager import DepartmentManagerService
 from kernel.services.mission_scheduler import MissionSchedulerService
 from kernel.services.organization_manager import OrganizationManagerService
@@ -27,7 +26,7 @@ REQUIRED_SERVICES: list[str] = [
 
 class Kernel:
     def __init__(self) -> None:
-        self._event_bus = InMemoryEventBus()
+        self._event_bus = EventBus()
         self._mission_scheduler = MissionSchedulerService(self._event_bus)
         self._organization_manager = OrganizationManagerService(self._event_bus)
         self._department_manager = DepartmentManagerService(self._event_bus)
