@@ -1,13 +1,7 @@
 # ⚡ ENTERPRISE.OS // OMNIMIND.AI ⚡
 
-```
-   ███████╗███╗   ██╗████████╗███████╗██████╗ ██████╗ ██████╗ ██╗███████╗ ██████╗ ███████╗
-   ██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██║██╔════╝██╔═══██╗██╔════╝
-   █████╗  ██╔██╗ ██║   ██║   █████╗  ██████╔╝██████╔╝██████╔╝██║███████╗██║   ██║███████╗
-   ██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗██╔═══╝ ██╔══██╗██║╚════██║██║   ██║╚════██║
-   ███████╗██║ ╚████║   ██║   ███████╗██║  ██║██║     ██║  ██║██║███████║╚██████╔╝███████║
-   ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝ v1.0
-```
+<img width="2822" height="1428" alt="image" src="https://github.com/user-attachments/assets/7c65b0d8-c882-4aa1-af90-a3edd6290085" />
+
 
 > **Sovereign, Multi-Agent Autonomous Enterprise Operating System.**
 > *Dynamic Executive Boardrooms, Guarded Capital Allocation, Persistent Corporate Memory, and Edge Runtime Continuity.*
