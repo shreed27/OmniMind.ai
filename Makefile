@@ -2,8 +2,8 @@
 
 bootstrap:
 	python3 -m venv .venv && . .venv/bin/activate && pip install --upgrade pip
-	cd backend && pip install -e ".[dev]"
-	cd frontend && pnpm install
+	cd backend && pip install -r requirements-dev.txt
+	cd frontend && npm install
 
 lint:
 	cd backend && ruff check .
