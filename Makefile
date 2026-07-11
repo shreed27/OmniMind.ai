@@ -2,20 +2,20 @@
 
 bootstrap:
 	python3 -m venv .venv && . .venv/bin/activate && pip install --upgrade pip
-	cd backend && pip install -r requirements-dev.txt
+	.venv/bin/pip install -r backend/requirements-dev.txt
 	cd frontend && npm install
 
 lint:
-	cd backend && ruff check .
-	cd backend && mypy .
+	cd backend && ../.venv/bin/python -m ruff check .
+	cd backend && ../.venv/bin/python -m mypy .
 	cd frontend && npm run lint
 
 typecheck:
-	cd backend && mypy .
+	cd backend && ../.venv/bin/python -m mypy .
 	cd frontend && npm run typecheck
 
 test:
-	cd backend && .venv/bin/python -m pytest -q
+	cd backend && ../.venv/bin/python -m pytest -q
 	cd frontend && npm test -- --run
 
 security:

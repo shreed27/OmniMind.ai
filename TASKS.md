@@ -72,6 +72,7 @@ Acceptance: Server starts. Health endpoint works.
 ## TASK-003
 
 Title: Initialize Next.js frontend.
+Status: Pending
 Acceptance: Homepage renders.
 
 ---
