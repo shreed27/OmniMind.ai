@@ -9,6 +9,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omnimind -d omnimind"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
 
   neo4j:
     image: neo4j:5.23
@@ -19,6 +24,11 @@ services:
       - "7687:7687"
     volumes:
       - neo4jdata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "neo4j status || exit 1"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
 
   redis:
     image: redis:7-alpine
@@ -26,6 +36,11 @@ services:
       - "6379:6379"
     volumes:
       - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
 
   qdrant:
     image: qdrant/qdrant:v1.9.2
@@ -34,6 +49,52 @@ services:
       - "6334:6334"
     volumes:
       - qdrantdata:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/healthz"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg2://omnimind:omnimind@postgres:5432/omnimind
+      REDIS_URL: redis://redis:6379/0
+      NEO4J_URL: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: omnimind
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_API_KEY: ""
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    command: >
+      sh -c "scripts/wait-for-services.sh
+             && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000/api/v1
 
 volumes:
   pgdata:
