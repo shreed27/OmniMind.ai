@@ -15,7 +15,7 @@ typecheck:
 	cd frontend && npm run typecheck
 
 test:
-	cd backend && pytest -q
+	cd backend && .venv/bin/python -m pytest -q
 	cd frontend && npm test -- --run
 
 security:

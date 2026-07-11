@@ -9,9 +9,7 @@ build/
 .venv/
 venv/
 env/
-.env
-.env.local
-.env.*.local
+.env*
 *.log
 .pytest_cache/
 .mypy_cache/
