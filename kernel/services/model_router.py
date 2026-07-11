@@ -60,7 +60,7 @@ class ModelRouter:
         task_complexity: str = "medium",
         budget_constraint: float | None = None,
         latency_requirement: str = "normal",
-        quality_requirement: str = "high",
+        quality_requirement: str = "normal",
     ) -> dict[str, Any]:
         """
         Select optimal model for task.

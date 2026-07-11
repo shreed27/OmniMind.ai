@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from kernel.services.reflection import ReflectionContext, ReflectionOutput, ReflectionService
+from kernel.services.reflection import ReflectionContext, ReflectionOutput, ReflectionService, ReflectionInput
 
 
 class FakeMemoryService:

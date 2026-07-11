@@ -17,7 +17,7 @@ class InMemoryEventBus(EventBus):
         self._dead_letter: list[tuple[str, Exception]] = []
         self._history: list[EventEnvelope] = []
 
-    def publish(self, event: EventEnvelope) -> str:
+    async def publish(self, event: EventEnvelope) -> str:
         if not isinstance(event, EventEnvelope):
             raise KernelBootError("event bus accepts only EventEnvelope instances")
 
@@ -31,8 +31,7 @@ class InMemoryEventBus(EventBus):
             try:
                 result = handler(event)
                 if hasattr(result, "__await__"):
-                    import asyncio
-                    asyncio.get_event_loop().run_until_complete(result)
+                    await result
             except Exception as exc:  # pragma: no cover - DLQ placeholder
                 raise InvalidEventError(
                     f"handler raised on {key}",

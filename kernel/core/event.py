@@ -106,12 +106,14 @@ class EventBus:
         self._subscribers: dict[str, list[Callable[["EventEnvelope"], None]]] = {}
         self._history: list[EventEnvelope] = []
 
-    def publish(self, event: EventEnvelope) -> str:
+    async def publish(self, event: EventEnvelope) -> str:
         from kernel.core.event_registry import EventRegistry
         EventRegistry.validate(event)
         key = event.name or event.payload.get("name") or "unknown"
         for handler in list(self._subscribers.get(key, [])):
-            handler(event)
+            result = handler(event)
+            if hasattr(result, "__await__"):
+                await result
         self._history.append(event)
         return event.causal_version
 

@@ -7,9 +7,8 @@ from typing import Any, Sequence
 logger = logging.getLogger("audit.pii")
 
 _SECRET_PATTERNS = [
-    re.compile(r"AIza[0-9A-Za-z\\-_]{35}"),
-    re.compile(r"sk-[A-Za-z0-9]{20,}"),
-    re.compile(r"(?i)secret"),
+    re.compile(r"AIza[0-9A-Za-z\-_]{20,}"),
+    re.compile(r"sk-[A-Za-z0-9]{10,}"),
 ]
 
 

@@ -175,11 +175,12 @@ class ResourcePolicy:
         Returns:
             Dict with policy update details
         """
+        from datetime import datetime, timezone
         result = {
             "policy_name": policy_name,
             "policy_value": policy_value,
             "organization_id": organization_id,
-            "updated_at": EventEnvelope.now({}),
+            "updated_at": datetime.now(timezone.utc).isoformat(),
         }
 
         # Emit policy change event

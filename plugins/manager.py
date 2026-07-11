@@ -40,12 +40,12 @@ class PluginManifest:
     """
 
     def __init__(self, manifest_data: dict[str, Any]) -> None:
-        self.name = manifest_data["name"]
-        self.version = manifest_data["version"]
-        self.author = manifest_data["author"]
+        self.name = manifest_data.get("name", "")
+        self.version = manifest_data.get("version", "")
+        self.author = manifest_data.get("author", "")
         self.description = manifest_data.get("description", "")
         self.permissions = manifest_data.get("permissions", [])
-        self.entry_point = manifest_data["entry_point"]
+        self.entry_point = manifest_data.get("entry_point", "")
         self.dependencies = manifest_data.get("dependencies", [])
         self.sandbox = manifest_data.get("sandbox", {})
 

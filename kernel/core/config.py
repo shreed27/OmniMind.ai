@@ -14,6 +14,17 @@ class KernelSettings:
     log_level: str = os.getenv("LOG_LEVEL", "INFO")
 
 
+class ConfigStore:
+    def __init__(self) -> None:
+        self._store: dict[str, Any] = {}
+
+    def set(self, key: str, value: Any) -> None:
+        self._store[key] = value
+
+    def get(self, key: str, default: Any = None) -> Any:
+        return self._store.get(key, default)
+
+
 class Settings(BaseSettings):
     app_env: str = "dev"
     log_level: str = "INFO"

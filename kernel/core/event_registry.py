@@ -84,11 +84,21 @@ class EventRegistry:
         "KernelTick": {"description": "Kernel loop completed."},
         "EdgeActivated": {"description": "Local mode enabled."},
         "PluginInstalled": {"description": "Manifest registered."},
+        "PluginEnabled": {"description": "Plugin enabled."},
+        "PluginDisabled": {"description": "Plugin disabled."},
         "PluginRemoved": {"description": "Manifest unregistered."},
         "OrganizationIQUpdated": {"description": "Aggregate score changed."},
+        "SynchronizationCompleted": {"description": "Edge synchronization completed."},
         "SimulationStarted": {"description": "Counterfactual run initiated."},
         "SimulationCompleted": {"description": "Counterfactual run completed."},
         "SimulationDiscarded": {"description": "Branch discarded; production untouched."},
+        "CreativeGenerated": {"description": "Creative asset generated."},
+        "DigitalTwinUpdated": {"description": "Digital twin state updated."},
+        "ResearchCompleted": {"description": "Research completes and outputs."},
+        "ResourceApproved": {"description": "Resource allocation approved."},
+        "ResourceAllocated": {"description": "Resource allocated."},
+        "ApprovalEscalated": {"description": "Approval escalated to high level."},
+        "PolicyUpdated": {"description": "Policy configuration updated."},
     }
 
     @classmethod

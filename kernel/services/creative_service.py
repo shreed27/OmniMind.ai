@@ -115,3 +115,72 @@ class CreativeService:
     async def get_artifact(self, artifact_id: str) -> dict[str, Any] | None:
         """Retrieve generated artifact."""
         return self._artifacts.get(artifact_id)
+
+    async def generate_product_launch_campaign(
+        self,
+        *,
+        product_name: str,
+        description: str,
+        mission_id: str | None = None,
+        trace_id: str | None = None,
+    ) -> dict[str, Any]:
+        """
+        Generate a full social media marketing campaign with copywriting for major platforms
+        and Unsplash placeholder image URLs that correspond to product themes.
+        """
+        artifact_id = str(uuid4())
+
+        keywords = product_name.lower().replace(" ", "-")
+        image_url = f"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
+        if "coffee" in keywords:
+            image_url = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80"
+        elif "ai" in keywords or "tech" in keywords or "mind" in keywords:
+            image_url = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"
+        elif "food" in keywords or "delivery" in keywords:
+            image_url = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80"
+
+        variations = [
+            {
+                "platform": "X/Twitter",
+                "text": f"🚀 Say hello to {product_name}! {description[:80]}... Try it now and revolutionize your workflow! #SaaS #Innovation #{keywords.replace('-', '')}",
+                "image_url": image_url,
+            },
+            {
+                "platform": "LinkedIn",
+                "text": f"🎯 Introducing {product_name}: {description}\n\nWe're thrilled to announce the launch of our latest innovation designed to deliver maximum value and streamline efficiency. Join us on this journey! #ProductLaunch #Business #TechStartups",
+                "image_url": image_url,
+            },
+            {
+                "platform": "Instagram",
+                "text": f"✨ Elevate your everyday with {product_name}. Designed beautifully, built intelligently. 👇 Link in bio to learn more! #Aesthetic #Creative #ModernLife #{keywords.replace('-', '')}",
+                "image_url": image_url,
+            }
+        ]
+
+        result = {
+            "artifact_id": artifact_id,
+            "product_name": product_name,
+            "description": description,
+            "asset_type": CreativeAssetType.SOCIAL_MEDIA,
+            "posts": variations,
+            "status": "completed",
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        }
+
+        self._artifacts[artifact_id] = result
+
+        event = EventEnvelope.create(
+            name="CreativeGenerated",
+            payload={
+                "artifact_id": artifact_id,
+                "asset_type": CreativeAssetType.SOCIAL_MEDIA,
+                "posts_count": len(variations),
+            },
+            mission_id=mission_id,
+            trace_id=trace_id,
+            confidence=0.9,
+            source={"service": "kernel", "module": "creative_service", "component": "generate_campaign"},
+        )
+        await self._bus.publish(event)
+
+        return result
