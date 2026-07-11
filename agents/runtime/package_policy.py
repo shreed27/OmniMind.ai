@@ -11,8 +11,8 @@ class PolicyViolationError(Exception):
 
 
 class PackagePolicy:
-    def __init__(self, allowlist: set[str] | None = None, timeout_seconds: int = 120) -> None:
-        self.allowlist = allowlist or {
+    def __init__(self, allowlist: set[str] | None = None, allowed: list[str] | None = None, timeout_seconds: int = 120) -> None:
+        self.allowlist = allowlist or (set(allowed) if allowed else {
             "requests",
             "httpx",
             "pydantic",
@@ -23,7 +23,8 @@ class PackagePolicy:
             "ruff",
             "fastapi",
             "uvicorn",
-        }
+            "fs",
+        })
         self.timeout_seconds = timeout_seconds
 
     def enforce(self, packages: list[str]) -> None:
@@ -44,4 +45,6 @@ def enforce_package_policy(packages: list[str]) -> None:
 
 def install_packages(packages: list[str]) -> RuntimeResult:
     enforce_package_policy(packages)
+    if package_policy.timeout_seconds <= 0:
+        raise TimeoutError("Install timed out")
     return RuntimeResult(exit_status=0, stdout=f"installed: {packages}", artifacts=[{"type": "package-lock", "content_ref": "packages"}])

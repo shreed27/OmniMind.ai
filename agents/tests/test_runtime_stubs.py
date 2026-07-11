@@ -8,6 +8,7 @@ from app.runtime.browser_runtime import BrowserRuntime
 from app.runtime.node_runtime import NodeRuntime
 from app.runtime.terminal_runtime import TerminalRuntime
 from app.runtime.package_policy import PackagePolicyError, enforce_package_policy, install_packages, package_policy
+from app.runtime.sandbox import RuntimeExecutionError
 from app.runtime import runtime as runtime_provider
 
 
