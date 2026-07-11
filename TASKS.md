@@ -449,34 +449,33 @@ Acceptance: Git for Organizations operational.
 
 ---
 
-# PHASE 8 — MEMORY
+# PHASE 8 — MEMORY / LEARNING / CONSTITUTION / EVOLUTION
 
-- Working Memory
-- Mission Memory
-- Department Memory
-- Organization Memory
-- Knowledge Graph
-- Archive
-- Night Cycle
-- Semantic Search
-- Hybrid Search
+Status: In Progress
+
+Implemented
+- `memory/service.py`, `memory/knowledge.py`, `memory/consolidation.py` establish scoped memory service, knowledge graph event emission, and duplicate/decay consolidation.
+- `kernel/services/reflection.py` provides mandatory reflection pipeline with lessons/knowledge/skills/recommendations output and completion signature.
+- `kernel/services/learning.py` absorbs reflection outputs into mission DNA, Organization IQ, and plasticity deltas.
+- `kernel/services/constitution.py` supports effective-time rule selection and non-destructive rollback revisions.
+- `kernel/services/evolution.py` supports proposal-only mutations, apply gating, and revert with rollback event emission.
+- Tests added in `kernel/tests/test_reflection.py`, `kernel/tests/test_learning.py`, `kernel/tests/test_constitution.py`, `kernel/tests/test_evolution.py`.
 
 Acceptance: Persistent learning works.
 
----
+# PHASE 9 — SECURITY, APPROVAL, AUDIT
 
-# PHASE 9 — DIGITAL TWIN
+Status: In Progress
 
-- Organization Graph
-- Department Graph
-- Worker Graph
-- Live Status
-- Confidence
-- Resources
-- Dependencies
-- Animations
+Implemented
+- `backend/core/security.py` provides `RBACEnforcer` enforcing frozen permission matrix roles.
+- `backend/core/dependencies.py` provides FastAPI permission dependency wiring for command endpoints.
+- `backend/core/pii_scrub.py` prevents secret/prompt leakage before persistence or export.
+- `backend/audit/logger.py` provides immutable append-only audit record log.
+- `backend/audit/verify.py` checks audit order completeness with anti-tamper verification.
+- Tests added in `backend/tests/test_rbac.py`, `backend/tests/test_pii_scrub.py`, `backend/tests/test_audit.py`.
 
-Acceptance: Organization visibly alive.
+Acceptance: End-to-end security policies enforced.
 
 ---
 

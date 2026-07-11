@@ -36,3 +36,8 @@ class ConflictError(OmniMindError):
 class ValidationError(OmniMindError):
     def __init__(self, message: str, *, context: dict[str, Any] | None = None) -> None:
         super().__init__(message, code="VALIDATION_ERROR", status_code=422, context=context)
+
+
+class ForbiddenError(OmniMindError):
+    def __init__(self, message: str, *, context: dict[str, Any] | None = None) -> None:
+        super().__init__(message, code="FORBIDDEN", status_code=403, context=context)

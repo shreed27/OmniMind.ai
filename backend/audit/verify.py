@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
-
-logger = logging.getLogger("audit.verify")
+from typing import Any, Sequence
 
 logger = logging.getLogger("audit.verify")
 
