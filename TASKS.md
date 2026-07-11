@@ -64,6 +64,7 @@ Acceptance: All folders exist.
 ## TASK-002
 
 Title: Initialize FastAPI backend.
+Status: Complete
 Acceptance: Server starts. Health endpoint works.
 
 ---

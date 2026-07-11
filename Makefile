@@ -8,15 +8,15 @@ bootstrap:
 lint:
 	cd backend && ruff check .
 	cd backend && mypy .
-	cd frontend && pnpm lint
+	cd frontend && npm run lint
 
 typecheck:
 	cd backend && mypy .
-	cd frontend && pnpm typecheck
+	cd frontend && npm run typecheck
 
 test:
 	cd backend && pytest -q
-	cd frontend && pnpm test -- --run
+	cd frontend && npm test -- --run
 
 security:
 	cd backend && pip-audit || true

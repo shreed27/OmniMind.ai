@@ -6,5 +6,6 @@ describe("page", () => {
   it("renders homepage", () => {
     render(<Home />);
     expect(screen.getByText("OmniMind.ai")).toBeDefined();
+    expect(screen.getByText("Operating System for Autonomous Organizations")).toBeDefined();
   });
 });
