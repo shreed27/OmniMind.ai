@@ -64,9 +64,9 @@ EnterpriseOS uniquely covers and integrates **all 3 main Hackathon Tracks** as c
 *   It analyzes active file diffs (`git diff`) and automatically generates **Conventional Commit messages** and beautiful, structured **Markdown PR descriptions** (including key changes, file modifications, and automated verification checklists).
 *   *Endpoint: `POST /api/v1/git/history`*
 
-### 🎨 WOW FEATURE #3: SOCIAL CAMPAIGN & IMAGEN 3 MARKETING COPILOT
+### 🎨 WOW FEATURE #3: SOCIAL CAMPAIGN & NB2 LITE IMAGE GENERATION COPILOT
 *   Converts any raw product description into a complete social media growth campaign.
-*   Integrates with **Unsplash guided templates** to fetch theme-specific image assets while **Gemini** writes customized platform-specific copy:
+*   Integrates with **NB2 Lite** to fetch theme-specific image assets and generated mockup designs while **Gemini** writes customized platform-specific copy:
     *   **X/Twitter**: High-impact hooks, max 280-chars, and custom hashtags.
     *   **LinkedIn**: Structured bullet-points, value-driven, and clear CTAs.
     *   **Instagram**: Aesthetic trend copywriting with visual layout formatting.
