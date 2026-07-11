@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Protocol, runtime_checkable
+from typing import Any, Callable, Coroutine
 
 
 @dataclass(frozen=True, slots=True)
@@ -82,7 +82,6 @@ class EventEnvelope:
             "timestamp": timestamp,
             "source": source,
         }
-        payload_hash = hashlib.sha256(json.dumps(raw, sort_keys=True, default=str).encode()).hexdigest()
         return cls(
             event_id=str(uuid4()),
             causal_version=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f"),
@@ -95,20 +94,33 @@ class EventEnvelope:
             trace_id=trace_id or str(uuid4()),
             confidence=confidence,
             payload=payload,
-            payload_hash=payload_hash,
+            payload_hash=hashlib.sha256(json.dumps(raw, sort_keys=True, default=str).encode()).hexdigest(),
             immutable=True,
             context={},
             name=name,
         )
 
 
-@runtime_checkable
-class EventBus(Protocol):
-    def publish(self, event: EventEnvelope) -> str:
-        ...
+class EventBus:
+    def __init__(self) -> None:
+        self._subscribers: dict[str, list[Callable[["EventEnvelope"], None]]] = {}
+        self._history: list[EventEnvelope] = []
 
-    def subscribe(self, event_name: str, handler: Callable[[EventEnvelope], None]) -> str:
-        ...
+    def publish(self, event: EventEnvelope) -> str:
+        from kernel.core.event_registry import EventRegistry
+        EventRegistry.validate(event)
+        key = event.name or event.payload.get("name") or "unknown"
+        for handler in list(self._subscribers.get(key, [])):
+            handler(event)
+        self._history.append(event)
+        return event.causal_version
+
+    def subscribe(self, event_name: str, handler: Callable[["EventEnvelope"], None]) -> str:
+        self._subscribers.setdefault(event_name, []).append(handler)
+        return event_name
 
     def disconnect(self) -> None:
-        ...
+        self._subscribers.clear()
+
+    def history(self) -> list[EventEnvelope]:
+        return list(self._history)

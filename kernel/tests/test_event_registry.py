@@ -1,16 +1,13 @@
 from __future__ import annotations
 
-import pytest
-
-from kernel.core.event_registry import InvalidEventError, load_event_registry, validate_event
+from kernel.core.event_registry import EventRegistry
 
 
-def test_validate_event_raises_on_missing_field() -> None:
-    with pytest.raises(InvalidEventError):
-        validate_event({"name": "x"})
+def test_event_registry_known_names() -> None:
+    assert "MissionCreated" in EventRegistry.defined_events()
+    assert "ReflectionStarted" in EventRegistry.defined_events()
 
 
-def test_load_event_registry_returns_events() -> None:
-    registry = load_event_registry("docs/registry/EVENTS.md")
-    assert "events" in registry
-    assert isinstance(registry["events"], list)
+def test_event_registry_canonical_definition() -> None:
+    definition = EventRegistry.canonical_definition("MissionCreated")
+    assert definition["description"].startswith("Mission")

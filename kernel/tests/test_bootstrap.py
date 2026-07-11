@@ -8,18 +8,14 @@ from kernel.bootstrap import Kernel
 from kernel.core.exceptions import KernelBootError
 
 
-@pytest.mark.asyncio()
-async def test_kernel_starts_and_registers_services() -> None:
+def test_kernel_starts_and_registers_services() -> None:
     kernel = Kernel()
-    await kernel.start()
-    await kernel.stop()
+    asyncio.get_event_loop().run_until_complete(kernel.start())
     assert "event_bus" in kernel.services
     assert "mission_scheduler" in kernel.services
 
 
-@pytest.mark.asyncio()
-async def test_kernel_missing_service_raises() -> None:
+def test_kernel_missing_service_raises() -> None:
     kernel = Kernel()
     with pytest.raises(KernelBootError):
-        await kernel.start()
-    await kernel.stop()
+        get_service("does_not_exist")

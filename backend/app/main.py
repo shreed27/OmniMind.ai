@@ -3,8 +3,8 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from app.api.v1.health import router as health_router
-from app.api.v1.managed_agents import router as managed_agents_router
+from backend.app.api.v1.health import router as health_router
+from backend.app.api.v1.managed_agents import router as managed_agents_router
 from app.core.config import get_settings
 from app.core.events import emit
 

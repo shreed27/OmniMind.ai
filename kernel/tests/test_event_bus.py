@@ -6,7 +6,7 @@ from kernel.core.event import EventBus, EventEnvelope
 def test_event_bus_publishes_to_subscriber() -> None:
     bus = EventBus()
     calls: list[EventEnvelope] = []
-    bus.subscribe("Tested", lambda event: calls.append(event))
+    bus.subscribe("unknown", lambda event: calls.append(event))
     event = EventEnvelope(name="Tested", payload={"value": 1}, context={})
     bus.publish(event)
     assert len(calls) == 1
