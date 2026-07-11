@@ -1,30 +1,39 @@
 # Skill Marketplace
 
-## Concept
+## Skill
 
-Skills are first-class artifacts.
-Agents discover, request, install, version, and retire skills through a registry.
+UUID
 
-## Lifecycle
+Version
 
-1. publish
-2. review by security / legal
-3. version and tag
-4. discover by need or search
-5. install to department or agent
-6. benchmark in mission execution
-7. evolve or deprecate based on reflection
+Owner
 
-## Contents
+Dependencies
 
-- capability description
-- input/output contract
-- resource needs
-- latency and failure profile
-- permissions required
-- evidence of past performance
+Prompt
 
-## Economy
+Tools
 
-Track usage, success rate, cost, and risk.
-Promote high-trust skills; quarantine or downgrade unreliable ones.
+Tests
+
+Benchmark
+
+Rating
+
+Downloads
+
+Forks
+
+## Capabilities
+
+Skills can:
+- Publish
+- Install
+- Fork
+- Update
+- Merge
+- Rollback
+
+## Versioning
+
+Every skill is version controlled.

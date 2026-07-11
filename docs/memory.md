@@ -1,32 +1,47 @@
 # Memory
 
-## Layers
+## Memory Layers
 
-1. Working memory — current mission context
-2. Mission memory — findings, decisions, artifacts
-3. Department memory — team strategies, failures, skills
-4. Company memory — cross-mission patterns and reusable assets
-5. Knowledge graph — entities, relations, evidence
-6. Skill library — reusable capabilities
-7. Organizational memory — long-term lessons, benchmarks
+Working Memory
 
-## Stores
+↓
 
-- successes
-- failures
-- strategies
-- lessons
-- patterns
-- artifacts
-- benchmarks
+Mission Memory
 
-## Sync
+↓
 
-Local-first.
-Synchronize to cloud when connectivity returns.
-Merge conflicts resolved by evidence weight and recency, not last-write-wins.
+Department Memory
 
-## Isolation
+↓
 
-Each agent and department reads/writes its own slice.
-Cross-slice access requires an event request and conflict resolution.
+Organization Memory
+
+↓
+
+Knowledge Graph
+
+↓
+
+Skill Store
+
+↓
+
+Archived Memory
+
+## Retrieval
+
+Semantic
+
+Graph
+
+Hybrid
+
+## Maintenance
+
+Importance Score
+
+Decay
+
+Reflection updates memory.
+
+Night Cycle consolidates memory.
