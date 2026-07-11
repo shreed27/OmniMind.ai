@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from kernel.bootstrap import Kernel
+from kernel.bootstrap import Kernel, get_service
 from kernel.core.exceptions import KernelBootError
 
 
