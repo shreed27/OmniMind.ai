@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from typing import Any
 
 from neo4j import AsyncGraphDatabase
 

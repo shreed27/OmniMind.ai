@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from typing import Any
 
 import pytest
-from neo4j import AsyncGraphDatabase
 
 from app.db.redis import create_redis, ping
 from app.db.qdrant import create_qdrant, ensure_collection

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "omnimind-kernel"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "OmniMind.ai EnterpriseOS kernel core services."
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["kernel*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["kernel/tests"]
+addopts = "-q"
+
+[tool.mypy]
+python_version = "3.11"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"

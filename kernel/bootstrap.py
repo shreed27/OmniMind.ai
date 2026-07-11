@@ -47,7 +47,7 @@ class Kernel:
 
     async def start(self) -> None:
         self._register_signal_handlers()
-        required_missing = [name for name in REQUIRED_SERVICES if getattr(self, f"_{name.replace('.', '_')}", None) is None]
+        required_missing = [name for name in REQUIRED_SERVICES if self.services.get(name) is None]
         if required_missing:
             raise KernelBootError(f"Missing required services: {required_missing}")
         self._logger.info("Kernel started with services: %s", ",".join(self.services.keys()))

@@ -1,42 +1,55 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Coroutine
+from typing import Any
 
 from kernel.core.event import EventEnvelope
-from kernel.core.ports import EventBus
+from kernel.core.ports import EventBus, Handler
+from kernel.core.events import EventRegistry
 from kernel.core.exceptions import InvalidEventError
 
 
-class InMemoryEventBus:
+class InMemoryEventBus(EventBus):
+    """Kernel Event Bus Interface implementation for development."""
+
     def __init__(self) -> None:
-        self._subscribers: dict[str, list[Callable[[EventEnvelope], Coroutine[Any, Any, None]]]] = {}
-        self._dead_letter: list[tuple[str, Exception]] = []
+        self._subscribers: dict[str, list[Handler]] = {}
 
     async def publish(self, event: EventEnvelope) -> str:
-        try:
-            from kernel.core.event_registry import EventRegistry
-            EventRegistry.validate(event)
-        except Exception as exc:
-            raise InvalidEventError(str(exc)) from exc
-
-        listeners = self._subscribers.get(event.payload.get("name", ""), [])
-        for handler in list(listeners):
+        EventRegistry.validate(event)
+        key = f"{event.context.get('mission_id') or 'global'}::{event.name}"
+        published = f"{key}::{event.event_id}"
+        for handler in list(self._subscribers.get(event.name, [])):
             try:
-                await handler(event)
-            except Exception as exc:  # pragma: no cover - defensive
-                self._dead_letter.append((event.causal_version, exc))
-        return event.causal_version
+                await _invoke(handler, event)
+            except Exception as exc:  # pragma: no cover - DLQ placeholder
+                raise InvalidEventError(
+                    f"handler raised on {event.name}",
+                    context={"event_id": event.event_id, "handler": repr(handler)},
+                ) from exc
+        return published
 
-    def subscribe(
-        self,
-        event_name: str,
-        handler: Callable[[EventEnvelope], Coroutine[Any, Any, None]],
-    ) -> str:
-        listeners = self._subscribers.setdefault(event_name, [])
-        listeners.append(handler)
-        return event_name
+    def subscribe(self, event_name: str, handler: Handler) -> None:
+        self._subscribers.setdefault(event_name, []).append(handler)
+
+    async def start(self) -> None:
+        return None
+
+    async def stop(self) -> None:
+        await self.disconnect()
 
     async def disconnect(self) -> None:
         self._subscribers.clear()
 
+    async def replay(self, name: str) -> "AsyncIterable[EventEnvelope]":
+        while False:
+            yield EventEnvelope(name="Replay", payload={}, context={})
 
+    async def dead_letter(self) -> "AsyncIterable[tuple[EventEnvelope, str]]":
+        while False:
+            yield EventEnvelope(name="DeadLetter", payload={}, context={}), ""
+
+
+async def _invoke(handler: Handler, event: EventEnvelope) -> None:
+    result = handler(event)
+    if hasattr(result, "__await__"):
+        await result

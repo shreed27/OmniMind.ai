@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import asyncio
-from typing import Any
 
 import redis.asyncio as redis
 from redis.asyncio import Redis

@@ -1,47 +1,50 @@
 from __future__ import annotations
 
 import logging
-import traceback
+from datetime import datetime, timezone
 from typing import Any
+from uuid import UUID, uuid4
 
-from app.core.config import get_logger
-
-logger = get_logger("app.events")
+from pydantic import BaseModel, Field
 
 
-class EventEnvelope:
-    """Event envelope for internal events."""
+logger = logging.getLogger("app.events")
 
-    __slots__ = ("name", "payload", "context")
 
-    def __init__(self, name: str, payload: dict[str, Any], context: dict[str, Any]) -> None:
-        self.name = name
-        self.payload = payload
-        self.context = context
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+class EventEnvelope(BaseModel):
+    event_id: UUID = Field(default_factory=uuid4)
+    name: str = Field(min_length=1)
+    payload: dict[str, Any] = Field(default_factory=dict)
+    context: dict[str, Any] = Field(default_factory=dict)
+    timestamp: datetime = Field(default_factory=_utcnow)
+
+    class Config:
+        frozen = True
 
     def emit(self) -> None:
         try:
-            logger.info(
-                'EVENT %s payload=%s context=%s',
-                self.name,
-                self.payload,
-                self.context,
-            )
-        except Exception:  # pragma: no cover - logging must never fail orphaning events
-            traceback.print_exc()
+            logger.info("EVENT %s payload=%s context=%s", self.name, self.payload, self.context)
+        except Exception:
+            pass
 
-
-def _base_context() -> dict[str, Any]:
-    from app.core.config import get_settings, enrich_event_context
-
-    return enrich_event_context({})
+    def to_neo4j_payload(self) -> dict[str, Any]:
+        return {
+            "event_id": str(self.event_id),
+            "name": self.name,
+            "payload": self.payload,
+            "context": self.context,
+            "timestamp": self.timestamp.isoformat(),
+        }
 
 
 def emit(name: str, payload: dict[str, Any], context: dict[str, Any] | None = None) -> EventEnvelope:
-    """Create an event envelope and emit it immediately with structured logging."""
-    merged = _base_context()
-    if context:
-        merged.update(context)
+    from app.core.config import enrich_event_context
+
+    merged = enrich_event_context(context or {})
     event = EventEnvelope(name=name, payload=payload, context=merged)
     event.emit()
     return event

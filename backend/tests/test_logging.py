@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
 
-import pytest
 from fastapi.testclient import TestClient
 
 from app.core.logging import StructuredFormatter, setup_logging

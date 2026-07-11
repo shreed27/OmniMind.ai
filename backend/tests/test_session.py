@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import asyncio
-from typing import AsyncGenerator
 
 import pytest
 from sqlalchemy import text
