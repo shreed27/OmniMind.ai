@@ -1,8 +1,14 @@
+from __future__ import annotations
+
 from qdrant_client import QdrantClient
 
 
 def create_qdrant(url: str, api_key: str | None = None) -> QdrantClient:
-    return QdrantClient(url=url, api_key=api_key or "")
+    return QdrantClient(
+        url=url,
+        api_key=api_key or "",
+        prefer_grpc=False,
+    )
 
 
 def ensure_collection(client: QdrantClient, name: str, vector_size: int = 768) -> None:
@@ -11,5 +17,5 @@ def ensure_collection(client: QdrantClient, name: str, vector_size: int = 768) -
             collection_name=name,
             vectors_config={"size": vector_size, "distance": "Cosine"},
         )
-    except Exception:  # pragma: no cover - ignore if exists
+    except Exception:  # pragma: no cover - ignore exists
         pass
