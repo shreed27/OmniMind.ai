@@ -226,7 +226,7 @@ async def split_department(
     }
 
 
-@router.delete("/{department_id}", status_code=204)
+@router.delete("/{department_id}")
 async def archive_department(
     department_id: UUID,
     x_role: str = Header(default="system"),

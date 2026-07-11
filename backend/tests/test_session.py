@@ -21,7 +21,10 @@ async def test_db_reconnection_after_pool_dispose() -> None:
     await dispose_db()
     await init_db()
     async with get_session() as session:
-        result = await session.execute(text("SELECT current_database()"))
+        if "sqlite" in session.bind.dialect.name:
+            result = await session.execute(text("SELECT 'sqlite'"))
+        else:
+            result = await session.execute(text("SELECT current_database()"))
         database = result.scalar_one()
     assert isinstance(database, str)
 

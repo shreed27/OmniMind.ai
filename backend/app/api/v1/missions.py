@@ -279,7 +279,7 @@ async def fail_mission(
     }
 
 
-@router.delete("/{mission_id}", status_code=204)
+@router.delete("/{mission_id}")
 async def archive_mission(
     mission_id: UUID,
     x_role: str = Header(default="system"),

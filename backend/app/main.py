@@ -9,6 +9,12 @@ from backend.app.api.v1.managed_agents import router as managed_agents_router
 from backend.app.api.v1.missions import router as missions_router
 from backend.app.api.v1.organizations import router as organizations_router
 from backend.app.api.v1.workers import router as workers_router
+from backend.app.api.v1.git_history import router as git_history_router
+from backend.app.api.v1.creative_campaign import router as creative_campaign_router
+from backend.app.api.v1.observatory import router as observatory_router
+from backend.app.api.v1.executive_board import router as executive_board_router
+from backend.app.api.v1.resources import router as resources_router
+from backend.app.api.v1.memory import router as memory_router
 from backend.app.core.error_enforcer import register_error_handlers
 from app.core.config import get_settings
 from app.core.events import emit
@@ -29,6 +35,12 @@ def create_app() -> FastAPI:
     application.include_router(organizations_router)
     application.include_router(departments_router)
     application.include_router(workers_router)
+    application.include_router(git_history_router)
+    application.include_router(creative_campaign_router)
+    application.include_router(observatory_router)
+    application.include_router(executive_board_router)
+    application.include_router(resources_router)
+    application.include_router(memory_router)
 
     # Register error contract enforcer
     register_error_handlers(application)

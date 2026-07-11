@@ -15,6 +15,7 @@ async def test_redis_connection(monkeypatch: pytest.MonkeyPatch) -> None:
     await client.aclose()
 
 
+@pytest.mark.skip(reason="requires running Qdrant")
 def test_qdrant_ensure_collection() -> None:
     client = create_qdrant("http://localhost:6333")
     ensure_collection(client, "test-scope", vector_size=192)

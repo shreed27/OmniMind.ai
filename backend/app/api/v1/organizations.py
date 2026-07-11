@@ -179,7 +179,7 @@ async def get_organization_health(organization_id: UUID) -> dict[str, Any]:
     )
 
 
-@router.delete("/{organization_id}", status_code=204)
+@router.delete("/{organization_id}")
 async def archive_organization(
     organization_id: UUID,
     x_role: str = Header(default="system"),

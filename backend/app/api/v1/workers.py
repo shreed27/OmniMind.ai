@@ -273,7 +273,7 @@ async def spawn_specialist(
     }
 
 
-@router.delete("/{worker_id}", status_code=204)
+@router.delete("/{worker_id}")
 async def archive_worker(
     worker_id: UUID,
     x_role: str = Header(default="system"),
