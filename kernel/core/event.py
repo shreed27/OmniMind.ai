@@ -1,11 +1,7 @@
 from __future__ import annotations
 
-import hashlib
-import json
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any
-from uuid import uuid4
+from typing import Any, Callable, Protocol, runtime_checkable
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,18 +22,6 @@ class EventEnvelope:
     context: dict[str, Any] = field(default_factory=dict)
     name: str = ""
 
-    @staticmethod
-    def now(source: dict[str, Any]) -> str:
-        return datetime.now(timezone.utc).isoformat()
-
-    @staticmethod
-    def ulid_lite() -> str:
-        return datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
-
-    @staticmethod
-    def next_id() -> str:
-        return str(uuid4())
-
     def with_ids(
         self,
         *,
@@ -47,7 +31,7 @@ class EventEnvelope:
         department_id: str | None = None,
         worker_id: str | None = None,
         trace_id: str | None = None,
-    ) -> EventEnvelope:
+    ) -> "EventEnvelope":
         return EventEnvelope(
             event_id=event_id or self.event_id,
             causal_version=self.causal_version,
@@ -66,8 +50,9 @@ class EventEnvelope:
             name=self.name,
         )
 
-    @staticmethod
+    @classmethod
     def create(
+        cls,
         name: str,
         payload: dict[str, Any],
         *,
@@ -78,8 +63,14 @@ class EventEnvelope:
         trace_id: str | None = None,
         confidence: float = 0.0,
         source: dict[str, Any] | None = None,
-    ) -> EventEnvelope:
+    ) -> "EventEnvelope":
+        from datetime import datetime, timezone
+        from uuid import uuid4
+        import hashlib
+        import json
+
         source = source or {"service": "kernel", "module": "unknown", "component": "unknown"}
+        timestamp = datetime.now(timezone.utc).isoformat()
         raw = {
             "name": name,
             "mission_id": mission_id,
@@ -88,20 +79,20 @@ class EventEnvelope:
             "worker_id": worker_id,
             "confidence": confidence,
             "payload": payload,
-            "timestamp": EventEnvelope.now(source),
+            "timestamp": timestamp,
             "source": source,
         }
-        payload_hash = hashlib.sha256(json.dumps(raw, sort_keys=True, default=str).encode("utf-8")).hexdigest()
-        return EventEnvelope(
-            event_id=EventEnvelope.next_id(),
-            causal_version=EventEnvelope.ulid_lite(),
-            timestamp=raw["timestamp"],
+        payload_hash = hashlib.sha256(json.dumps(raw, sort_keys=True, default=str).encode()).hexdigest()
+        return cls(
+            event_id=str(uuid4()),
+            causal_version=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f"),
+            timestamp=timestamp,
             source=source,
             mission_id=mission_id,
             organization_id=organization_id,
             department_id=department_id,
             worker_id=worker_id,
-            trace_id=trace_id or EventEnvelope.next_id(),
+            trace_id=trace_id or str(uuid4()),
             confidence=confidence,
             payload=payload,
             payload_hash=payload_hash,
@@ -109,3 +100,15 @@ class EventEnvelope:
             context={},
             name=name,
         )
+
+
+@runtime_checkable
+class EventBus(Protocol):
+    def publish(self, event: EventEnvelope) -> str:
+        ...
+
+    def subscribe(self, event_name: str, handler: Callable[[EventEnvelope], None]) -> str:
+        ...
+
+    def disconnect(self) -> None:
+        ...

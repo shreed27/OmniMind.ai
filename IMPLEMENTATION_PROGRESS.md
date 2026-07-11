@@ -1,22 +1,19 @@
 # OmniMind.ai Implementation Progress
 
 Version: 1.0
-Last Updated: 2025-07-11
-
-## Backlog Progress
+Last Updated: 2026-07-11
 
 | Task | Phase | Title | Status | Notes |
 |------|-------|-------|--------|-------|
 | TASK-001 | P0 | Monorepo scaffold | Complete | Repo dirs, backend shell, frontend shell, tooling |
-| TASK-002 | P0 | Python service template | Complete | FastAPI app, logging, events, config, tests |
+| TASK-002 | P0 | FastAPI backend | Complete | Backend app, docs, tests, events |
 | TASK-003 | P0 | Next.js frontend shell | Pending | Blocked until npm install completes |
-| TASK-009 | P8 | Memory / Learning / Constitution / Evolution | Complete | Kernel services + backend audit/PII/RBAC services implemented |
-| TASK-010 | P8 | Reflection pipeline service | Complete | Events emitted; lessons, knowledge, skills, recommendations structured |
-| TASK-011 | P8 | Learning / IQ / Plasticity / Mission DNA | Complete | Absorb flow emits LearningCompleted |
-| TASK-012 | P8 | Constitution effective-time rules | Complete | Query + rollback without mutating history |
-| TASK-013 | P8 | Evolution proposals + revert | Complete | Approval gating preserved; rollback events emitted |
-| TASK-014 | P9 | Security/RBAC enforcement | Complete | Role matrix enforced; API dependency helper added |
-| TASK-015 | P9 | PII scrub middleware | Complete | Secret patterns redacted before persistence/export |
-| TASK-016 | P9 | Audit log + tamper verification | Complete | Immutable append path + order verification |
+| PHASE-4-BACKEND | P4 | Phase 4: Mission Graph / Kernel Contracts | In Progress | Real code exists under `backend/`, `kernel/`, `mission_graph/`, `agents/`, `memory/`, `events/`. Canonical backend namespace is `backend.*`; backward-compatible `backend/app.*` aliases added. |
+| PHASE-4-NAMESPACE-FIX | P4 | Backend namespace + docs | Complete | Added `backend/app/db/__init__.py`, `backend/app/db/models.py`, `backend/app/events/__init__.py`, `backend/app/core/logging.py`. Updated Makefile test target to use `PYTHONPATH=.` and `python -m pytest`. |
+| PHASE-5-TRACKING | P5 | Phase 5: Manager Layer + Event Contracts | In Progress | Kernel services for mission scheduler, organization manager, department manager, worker scheduler implemented with event emissions. Base agent contract added. |
 
-Overall Progress: Phase 8/9 shipped; next up is Phase 9 hardening and Phase 10 observability/read models.
+Overall Progress: In Progress
+
+## Verification Snapshot
+- Verified passing backend subset: `test_events`, `test_config`, `test_health`, `test_logging`.
+- Full suite execution is currently blocked by backend test environment inconsistency: the backend `.venv` pytest path is broken; namespace aliases are now in place, but `make test` cannot complete until the backend test environment is repaired.
