@@ -1,43 +1,49 @@
-# Research Goal
+# Research Vision
 
-EnterpriseOS is not a workflow engine.
+## Hypothesis
 
-EnterpriseOS is not an agent framework.
+Organizations are a better abstraction than individual AI agents.
 
-## Research Hypothesis
+## Questions
 
-Organizations are a better abstraction for autonomous intelligence than individual agents.
+- Can organizations learn?
+- Can organizations restructure?
+- Can organizational memory outperform agent memory?
+- Can Mission Graph improve explainability?
+- Can reusable skills compound?
 
-## Primary Research Questions
+## Novel Contributions
 
-Can organizations improve faster than individual agents?
-
-Can organizational memory outperform isolated memory?
-
-Can reusable organizational skills compound over time?
-
-Can organizational restructuring improve task performance?
-
-Can Mission Graph provide explainability without exposing chain-of-thought?
+- Mission Graph
+- Organization Graph
+- Organization IQ
+- Organizational Plasticity
+- Mission DNA
+- Organization Constitution
+- Skill Marketplace
+- Edge Continuity
+- Living Digital Twin
 
 ## Metrics
 
-Organizational IQ
+- Mission Success
+- Planning Time
+- Execution Time
+- Knowledge Growth
+- Skill Growth
+- Conflict Resolution
+- Memory Reuse
+- Plasticity
+- IQ
 
-Plasticity
+## Baselines
 
-Knowledge Reuse
+- CrewAI
+- AutoGen
+- LangGraph
+- OpenAI Swarm
+- MetaGPT
 
-Skill Growth
+## Goal
 
-Mission Success Rate
-
-Conflict Resolution Time
-
-Resource Efficiency
-
-Learning Rate
-
-## Policy
-
-The implementation should always favor these research goals over adding unrelated features.
+Demonstrate that organizations improve even when models remain unchanged.
