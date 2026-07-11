@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
+from app.api.v1.health import router as health_router
+from app.api.v1.managed_agents import router as managed_agents_router
 from app.core.config import get_settings
 from app.core.events import emit
 
@@ -16,10 +18,8 @@ def create_app() -> FastAPI:
         docs_url="/api/docs",
         openapi_url="/api/openapi.json",
     )
-
-    @application.get("/healthz")
-    async def healthz() -> dict[str, str]:
-        return {"status": "ok"}
+    application.include_router(health_router)
+    application.include_router(managed_agents_router)
 
     @application.on_event("startup")
     async def _on_startup() -> None:
