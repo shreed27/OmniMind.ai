@@ -1,43 +1,80 @@
 # Engineering Principles
 
+## Product Principles
+
 There is no chat.
 
-There are only missions.
+Everything begins with a Mission.
 
 The organization is the intelligent system.
 
-Every decision is observable.
+Organizations outperform isolated agents.
 
-Every artifact has provenance.
-
-Every action is replayable.
-
-Every mission teaches the organization.
+## Architecture
 
 Everything is event-driven.
 
-Everything is version-controlled.
+Everything is observable.
 
-Everything is explainable.
+Everything is replayable.
 
-Everything has confidence.
+Everything is versioned.
 
-Nothing is hidden.
+Everything has provenance.
 
-No department is permanent.
+Everything emits Mission Graph nodes.
 
-Temporary specialists are encouraged.
+## Explainability
 
-Skills are reusable.
+Every decision answers
+
+- Why?
+- Who?
+- Evidence?
+- Confidence?
+- Alternatives?
+
+Never expose chain-of-thought.
+
+Expose reasoning summaries.
+
+## Memory
 
 Memory is hierarchical.
 
 Reflection is mandatory.
 
-Offline execution should continue with Edge Runtime.
+Learning is continuous.
 
-Mission continuity is never broken.
+## Skills
 
-EnterpriseOS should feel like GitHub, Linear and Kubernetes.
+Skills are reusable.
 
-Never like ChatGPT.
+Skills are versioned.
+
+Skills evolve.
+
+## Organization
+
+Departments are dynamic.
+
+Workers are disposable.
+
+Knowledge is permanent.
+
+## UI
+
+Never look like ChatGPT.
+
+Always feel like an operating system.
+
+Mission-first.
+
+Dashboard-first.
+
+Visual-first.
+
+## Research
+
+Optimize the organization.
+Not the model.
