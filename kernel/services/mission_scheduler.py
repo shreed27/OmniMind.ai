@@ -1,12 +1,14 @@
 from __future__ import annotations
 
-from typing import Any
+import logging
+from typing import Any, Awaitable, Callable, Coroutine
 
 from kernel.core.event import EventEnvelope
 from kernel.core.event_bus import InMemoryEventBus
 from kernel.core.exceptions import InvalidTransitionError, KernelBootError
 from kernel.core.logging import get_logger
 from kernel.core.ports import EventBus
+from uuid import UUID
 
 ALLOWED_TRANSITIONS: dict[str, set[str]] = {
     "Created": {"Queued", "Planning", "Cancelled", "Failed"},
@@ -61,7 +63,7 @@ class MissionSchedulerService:
                 "confidence": confidence,
                 "payload": payload or {},
             },
-            mission_id=mission_id if self._is_uuid(mission_id) else None,
+            mission_id=UUID(mission_id) if self._is_uuid(mission_id) else None,
             trace_id=trace_id,
             confidence=confidence,
             source={"service": "kernel", "module": "mission_scheduler", "component": "state_machine"},
@@ -74,7 +76,7 @@ class MissionSchedulerService:
             reflection_event = EventEnvelope.create(
                 name="ReflectionStarted",
                 payload={"mission_id": mission_id, "reason": f"terminal_state:{new_state}", "confidence": confidence},
-                mission_id=mission_id if self._is_uuid(mission_id) else None,
+                mission_id=UUID(mission_id) if self._is_uuid(mission_id) else None,
                 trace_id=trace_id,
                 confidence=confidence,
                 source={"service": "kernel", "module": "mission_scheduler", "component": "reflection_trigger"},

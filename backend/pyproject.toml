@@ -41,4 +41,4 @@ strict = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["app*"]
+include = ["app*", "kernel*", "mission_graph*", "agents*", "organization*", "events*", "api*"]

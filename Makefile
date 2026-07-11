@@ -6,16 +6,16 @@ bootstrap:
 	cd frontend && npm install
 
 lint:
-	cd backend && ../.venv/bin/python -m ruff check .
-	cd backend && ../.venv/bin/python -m mypy .
+	cd backend && env -u PYTHONPATH ../.venv/bin/python -m ruff check .
+	cd backend && env -u PYTHONPATH ../.venv/bin/python -m mypy .
 	cd frontend && npm run lint
 
 typecheck:
-	cd backend && ../.venv/bin/python -m mypy .
+	cd backend && env -u PYTHONPATH ../.venv/bin/python -m mypy .
 	cd frontend && npm run typecheck
 
 test:
-	cd backend && ../.venv/bin/python -m pytest -q
+	cd backend && env -u PYTHONPATH ../.venv/bin/python -m pytest -q
 	cd frontend && npm test -- --run
 
 security:
