@@ -1,27 +1,28 @@
-# Edge Runtime
+# Gemma Edge Runtime
 
-## Purpose
+## Components
 
-Operate offline, recover fast, and sync later.
+Mini CEO
 
-## Capabilities
+Mini Planner
 
-- local mission execution
-- local memory and state
-- offline fallback for skills and runtimes
-- conflict-free replicated data types for shared state
-- resume from checkpoint after failure
-- background sync when network returns
+Mini Engineer
 
-## Guarantees
+Mini Memory
 
-- durability before acknowledgment
-- idempotent event replay
-- deterministic replay for debugging
-- bounded resource usage on-device
+Mini Skill Store
 
-## When to use
+Mission Graph
 
-- deployed environments with intermittent connectivity
-- privacy or compliance constraints
-- cost-sensitive long-running missions
+Offline Reflection
+
+Offline Recovery
+
+Mission Sync
+
+## Sync behavior
+
+When internet returns
+→ Mission Graph merges.
+→ Cloud resumes.
+→ Mission never stops.

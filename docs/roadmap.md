@@ -1,47 +1,47 @@
 # Roadmap
 
-## v0.1 — Kernel shell
-- mission input
-- event bus
-- mission graph storage
-- basic org graph
-- CLI / API skeleton
+## Phase 1
 
-## v0.2 — Agents
-- executive board agents
-- worker agents
-- conflict engine
-- voting and approval flows
+Mission System
 
-## v0.3 — Memory and learning
-- layered memory
-- reflection loop
-- knowledge graph
-- organizational memory
+Organization
 
-## v0.4 — Skills and marketplace
-- skill registry
-- skill install/uninstall
-- benchmarks and promotion/demotion
+Mission Graph
 
-## v0.5 — UI
-- mission console
-- mission graph
-- org chart
-- executive board view
+Digital Twin
 
-## v0.6 — Edge runtime
-- local-first execution
-- offline mode
-- sync and merge
+Executive Board
 
-## v0.7 — Production hardening
-- auth, audit, secrets
-- observability
-- rate limits and budgets
-- rollback safety
+Event Bus
 
-## v1.0 — Demo target
-- end-to-end mission execution
-- autonomous org evolution
-- measurable learning from failures
+Reflection
+
+---
+
+## Phase 2
+
+Learning
+
+Skills
+
+Knowledge Graph
+
+Marketplace
+
+Edge Runtime
+
+---
+
+## Phase 3
+
+Counterfactual
+
+Mission DNA
+
+Enterprise Observatory
+
+Time Machine
+
+Multi-user
+
+Organization Federation
