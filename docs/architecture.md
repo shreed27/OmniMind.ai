@@ -1,48 +1,83 @@
-# Architecture
+# EnterpriseOS Architecture
 
-## Kernel
+## High Level
 
-Event-driven kernel owns:
-- Mission Scheduler
-- Event Bus
-- Knowledge Graph
-- Conflict Engine
-- Memory Manager
-- Skill Registry
-- Evolution Engine
-- Organization Graph
-- Mission Graph
-- Security Manager
-- Resource Manager
-- Analytics Engine
-- Reflection Engine
-- Synchronization Engine
+User
+↓
+Mission
+↓
+Mission Graph
+↓
+EnterpriseOS Kernel
+↓
+Living Organization
+↓
+Departments
+↓
+Managers
+↓
+Workers
+↓
+Dynamic Specialists
+↓
+Managed Agents
+↓
+Artifacts
+↓
+Review
+↓
+Reflection
+↓
+Organizational Learning
+↓
+Next Mission
 
-## Organization
+---
 
-Mission → CEO → Departments → Teams → Managers → Workers → Temporary Specialists
+## Core Kernel
 
-Departments own memory, skills, APIs, tools, knowledge, KPIs, artifacts, resources.
+Mission Scheduler
 
-## Communication
+Event Bus
 
-Nothing directly calls another agent. Everything is an event.
+Memory Manager
 
-Mission Created → Event Bus → Departments subscribe / wake / react / ignore
+Knowledge Graph
 
-## Shared state
+Skill Registry
 
-All work happens on the Mission Board.
-Versioned, timestamped, attributed, observable, replayable.
+Mission Graph
 
-## Execution
+Conflict Resolver
 
-Mission Graph nodes: Created → Planning → Research → Conflict → Vote → Approval → Execution → Deployment → Reflection → Learning
+Resource Manager
 
-Supports branches, merge, rollback, replay, diff, time machine.
+Evolution Engine
 
-## Conflict
+Reflection Engine
 
-Disagreement is expected.
-Security rejects → CEO spawns Review Committee → temporary specialists → final vote.
-Nothing is hidden.
+Synchronization Engine
+
+Edge Runtime Manager
+
+Organization Registry
+
+Digital Twin Engine
+
+Analytics Engine
+
+---
+
+## Principles
+
+Everything is Event Driven.
+
+Nothing directly calls another department.
+
+Everything communicates through the Event Bus.
+
+Everything is versioned.
+
+Everything is replayable.
+
+Everything learns.

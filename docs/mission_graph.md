@@ -1,43 +1,66 @@
 # Mission Graph
 
-## Structure
+Every mission is represented as a DAG.
 
-Every action is a node with:
-- who
-- why
-- confidence
-- evidence
-- alternatives
-- memory used
-- tools used
-- artifacts
-- time
-- cost
+## Node Types
 
-## Operations
+Mission
 
-- create mission
-- plan
-- research
-- detect conflict
-- vote / debate
-- approve / reject
-- execute
-- deploy
-- reflect
-- learn
+Decision
 
-## Versioning
+Conflict
 
-Like Git:
-- branches for risky experiments
-- merge when experiment succeeds
-- rollback on regression
-- replay for debugging
-- diff for change review
-- time machine to inspect prior state
+Vote
 
-## Storage
+Task
 
-Append-only event log by default.
-Derived views for board, org chart, KPI dashboards.
+Artifact
+
+Review
+
+Reflection
+
+Learning
+
+Skill
+
+Department
+
+Worker
+
+Memory
+
+## Edges
+
+Depends On
+
+Created By
+
+Reviewed By
+
+Learnt From
+
+Supersedes
+
+Forks
+
+Merged Into
+
+Rollback To
+
+Replay
+
+## Node Fields
+
+Every node has:
+- UUID
+- Timestamp
+- Confidence
+- Evidence
+- Artifacts
+- Alternative Paths
+- Dependencies
+- Reasoning Summary
+- Owner
+- Status
+- Version
